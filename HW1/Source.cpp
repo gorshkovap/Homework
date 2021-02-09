@@ -1,4 +1,9 @@
 #include <iostream>
+
+
+void f();
+
+
 main()
 {
 	int a = 10;
