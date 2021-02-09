@@ -2,7 +2,7 @@
 
 
 void f();
-
+void g();
 
 main()
 {
