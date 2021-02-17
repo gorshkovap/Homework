@@ -3,17 +3,20 @@
 #include <string>
 
 int main() {
-	const int n = 154999999; // вылезает ошибка о нехватке памяти
+	const int n = 155999999; // вылезает ошибка о нехватке памяти
 	std::vector<int> vector(n);
 	std::cout << "capacity(): " << vector.capacity() << std::endl;
 	try
 	{
-		if (n > 153999999)
-			throw "There is not the enought space to cover it";
+		if (n > 154999999)
+		{
+			throw std::overflow_error("too big value");
+		}
+		std::cout << "capacity:" << vector.capacity() << ' ';
 	}
-	catch (const int* exception)
+	catch (const std::overflow_error& exception)
 	{
-		std::cerr << "Error: " << exception << "\n";
+		std::cerr << "Error : " << exception.what() << '\n';
 	}
 
 	std::vector <std::string> sentence;
