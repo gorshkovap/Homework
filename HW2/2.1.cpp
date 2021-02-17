@@ -3,7 +3,7 @@
 #include <string>
 
 int main() {
-	const int n = 152999999; // вылезает ошибка о нехватке памяти
+	const int n = 153999999; // вылезает ошибка о нехватке памяти
 	std::vector<int> vector(n);
 	std::cout << "capacity(): " << vector.capacity() << std::endl;
 
