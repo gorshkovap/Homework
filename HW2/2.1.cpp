@@ -3,10 +3,9 @@
 #include <string>
 
 int main() {
-	const int n = 157999999; // вылезает ошибка о нехватке памяти
+	const int n = 1579999; // вылезает ошибка о нехватке памяти
 	std::vector<int> vector(n);
-	std::cout << "capacity(): " << vector.capacity() << std::endl;
-	try
+	/*try
 	{
 		if (n > 156999999)
 		std::cout << "capacity:" << vector.capacity() << ' ';
@@ -15,18 +14,31 @@ int main() {
 	{
 		std::cerr << "Error " << exception.what() << std::endl;
 		std::cout << vector.capacity() << std::endl;
+	}*/
+
+
+	std::vector<int> v(10, 0);
+	std::cout << "number of elements " << v.capacity() << std::endl;  // 10 elements
+	v.push_back(0);
+	std::cout << "number of elements " << v.capacity() << std::endl;   // 15 elements (1.5 * 10) 
+
+	v.reserve(100);
+	std::cout << "Size is " << v.capacity() << std::endl; // 100 elements
+
+	auto N = v.capacity();
+	while(true) 
+	{
+		N *= 10; 
+		try
+		{
+			v.reserve(N);
+		}
+		catch (const std::exception& exception)
+		{
+			std::cerr << "Error" << exception.what();
+			break;
+		}
 	}
 
-	std::vector <std::string> sentence;
-	sentence.push_back("Hello");
-	sentence.insert(sentence.end(), ("How", "are", "you?"));
-	std::cout << "max_size(): " << sentence.max_size() << std::endl;
-	std::cout << "size(): " << sentence.size() << std::endl;
-	std::cout << "capacity(): " << sentence.capacity() << std::endl;
-	sentence.insert(find(sentence.begin(), sentence.end(), "you?"), "always or not");
-	sentence.insert(sentence.begin(), ("There", "is", "a coomon text"));
-	sentence.back() = "!";
-	std::cout << "size(): " << sentence.size() << std::endl;
-	std::cout << "capacity(): " << sentence.capacity() << std::endl;
-
-}
+	std::cout << N / 10 << std::endl;
+	std::cout << "Capacity is " << v.capacity(); 
