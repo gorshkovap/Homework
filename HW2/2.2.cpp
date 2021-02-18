@@ -55,8 +55,14 @@ public:
 
 	int Calculus() 
 	{
-		
-		return std::chrono::duration_cast <std::chrono::microseconds> (m_time).count();
+		bool b = m_running;
+		pause();
+		auto time = std::chrono::duration_cast <std::chrono::microseconds>(m_time).count();
+		if (b)
+		{
+			proceed();
+		}
+		return time;
 	}
 
 private:
@@ -72,7 +78,24 @@ private:
 };
 
 
+struct Result
+{
 
+	Result() = default;
+	Result(const std::string& name, int time) : m_container(name), m_time(time), m_place(0) {}
+
+	Result(Result& other) = default;
+	Result(Result && other) = default;
+
+	Result& operator=(Result& other) = default;
+	Result& operator=(Result&& other) = default;
+
+	~Result() = default;
+
+	std::string m_container;
+	int m_time;
+	int m_place;
+};
 
 int main() 
 {
@@ -98,48 +121,50 @@ int main()
 			forward_list.insert_after(forward_list.before_begin(), i + 1);
 		}
 
-		int a;
+		std::vector<Result> v;
+		
 		{
 			Timer timer_array("Timer for array");
 			std::sort(array.begin(), array.end());
-			a = timer_array.Calculus();
+			timer_array.pause();
+			v.push_back(Result( "array", timer_array.Calculus() ));
 		}
-		int b;
+		
 		{
 			Timer timer_list("Timer for list");
 			list.sort();
-			b = timer_list.Calculus();
+			timer_list.pause();
+			v.push_back(Result( "list", timer_list.Calculus() ));
 		}
 
-		int c;
+		
 		{
 			Timer timer_forward_list("Timer for forward_list");
 			forward_list.sort();
-			c = timer_forward_list.Calculus();
+			timer_forward_list.pause();
+			v.push_back(Result( "forward_list", timer_forward_list.Calculus() ));
 		}
 
-		int d;
+		
 		{
 			Timer timer_vector("Timer for vector");
 			std::sort(vector.begin(), vector.end());
-			d = timer_vector.Calculus();
+			timer_vector.pause();
+			v.push_back(Result( "vector", timer_vector.Calculus()));
 		}
 
-		int e;
+		
 		{
 			Timer timer_deque("Timer for deque");
 			std::sort(deque.begin(), deque.end());
-			c = timer_deque.Calculus();
+			timer_deque.pause();
+			v.push_back(Result ( "deque", timer_deque.Calculus() ));
 		}
 
-		/*struct Timer_result {
-			int a, b, c, d, e;
-		};
-		
-		auto с_time = [](Timer_result& t1, Timer_result& t2) {
-			return t1.m_time < t2.m_time;
-			};       
+		std::sort(v.begin(), v.end(), [](Result& t1, Result& t2) {return t1.m_time < t2.m_time; });
 
-		std::sort(Timer_result.begin(), Timer_result.end(), auto c_time);
-
-}*/
+		for (auto i = 0; i < v.size(); ++i) {
+			v[i].m_place = i + 1;
+			std::cout << v[i].m_container <<' '<< v[i].m_place <<' '<< v[i].m_time << std::endl;
+		}
+}
