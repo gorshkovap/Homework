@@ -3,7 +3,7 @@
 #include <chrono>
 #include <vector>
 #include <algorithm>
-#include <array>
+#include <iomanip>
 
 class Timer
 {
@@ -17,18 +17,7 @@ public:
 	Timer(const std::string& name, std::ostream& stream = std::cout) :
 		m_name(name), m_stream(stream), m_begin(clock_t::now()), m_time(duration::zero()), m_running(true) {}
 
-	~Timer() noexcept
-	{
-		try
-		{
-			pause();
-			m_stream << m_name << " counted " << std::chrono::duration_cast <std::chrono::microseconds> (m_time).count() << " microseconds\n";
-		}
-		catch (...)
-		{
-			// std::abort();
-		}
-	}
+	~Timer() noexcept {}
 
 	void pause()
 	{
@@ -93,50 +82,40 @@ struct Result
 	int m_place;
 };
 
+std::pair <int, int> counter(const int n)
+{
+	Timer timer_set("timer for set");
+
+	std::set <int> st;
+	for (int i = 0; i < n; ++i)
+	{
+		st.insert(n - i);
+	}
+	int result_set = timer_set.Calculus();
+
+	Timer timer_vector("Timer for vector");
+	std::vector<int> vector(n,0);
+	for (int i = 0; i < n; ++i)
+	{
+		vector[i] = n - i;
+	}
+	std::sort(vector.begin(), vector.end());
+	int result_vector = timer_vector.Calculus();
+
+	return { result_set, result_vector };
+}
 
 int main()
 {
-	std::set <int> st;
-	std::cout << "Добавление случайных чисел" << std::endl;
-	for (int i = 0; i < 10; i++)
+	std::cout << std::left << std::setw(10) << std::setfill(' ') << 'N' << std::setw(10) << std::setfill(' ') << "set_time"
+		<< std::setw(10) << std::setfill(' ') << "vec_time" << '\n';
+	for (auto n = 10; n < 1000001; n *= 10)
 	{
-		int random = rand() % 10 + 1;
-		st.insert(random);
-		std::cout << i + 1 << ")" << random << std::endl;
+		std::cout << std::left << std::setw(10) << std::setfill(' ') << n << std::setw(10) << std::setfill(' ') << counter(n).first
+			<< std::setw(10) << std::setfill(' ') << counter(n).second << '\n';
 	}
 
-	const int n = 10;
-	std::vector <int> vector(n);
-	std::generate(vector.begin(), vector.end(), std::rand);
-	std::sort(vector.begin(), vector.end());
-	for (int n : vector)
-		std::cout << n << std::endl;
-
-	std::array <int, n> array;
-	for (int i = 0; i < 100; i++)
-	{
-		int array = rand() % 1000;
-		std::cout << array << std::endl;
- 	}
-	
-
-	std::vector<Result> v;
-
-	{
-		Timer timer_array("Timer for array");
-		std::sort(array.begin(), array.end());
-		timer_array.pause();
-		v.push_back(Result("array", timer_array.Calculus()));
-	}
-
-
-	{
-		Timer timer_vector("Timer for vector");
-		std::sort(vector.begin(), vector.end());
-		timer_vector.pause();
-		v.push_back(Result("vector", timer_vector.Calculus()));
-	}
-
-
-
+	return 0;
 }
+
+
