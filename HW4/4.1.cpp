@@ -12,8 +12,8 @@ int main(int argc, char** argv)
 {
 	[](auto& x) {++x; };
 
-	std::vector <int> v1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // создаем последовательность из 10 чисел
-	std::for_each(std::begin(v1), std::end(v1), [](auto x) {std::cout << x << std::endl; });
+	std::vector<int> v1(10);
+	std::iota(v1.begin(), v1.end(), 1);
 
 	std::copy(
 		std::istream_iterator < int >(std::cin), // добавили еще несколько чисел в вектор
