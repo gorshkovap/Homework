@@ -42,6 +42,10 @@ int main(int argc, char** argv)
 	auto result_1 = std::minmax_element(v1.begin(), v1.end()); // min and max valume  
 	std::cout << *result_1.first << " " << *result_1.second << std::endl;
 
+	auto [min, max] = std::minmax_element(v1.begin()), v1.end());
+	std::cout << *min << " " << *max << std::endl;
+
+
 
 	std::for_each(v1.begin(), v1.end(), [](auto x) {return x * x; }); // возводим в квадрат
 
