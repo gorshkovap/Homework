@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Код с 4-го семинара\Code.cpp" />
+    <ClCompile Include="..\..\Код с 4-го семинара\CW FEFM.cpp" />
     <ClCompile Include="..\HW3\3.1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
