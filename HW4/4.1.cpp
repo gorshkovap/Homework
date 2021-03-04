@@ -88,7 +88,7 @@ int main(int argc, char** argv)
 	std::sort(v2.begin(), v2.end());
 
 	std::vector <int> v4;
-	std::vector<int> vector_4(v1.size() + v2.size()); // создали последовательность V4
+	std::vector<int> v4(v1.size() + v2.size()); // создали последовательность V4
 	std::merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v4.begin());
 
 	auto a = std::equal_range(v4.begin(), v4.end(), 1); // диапазон
