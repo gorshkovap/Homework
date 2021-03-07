@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\HW3\3.1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Код с 4-го семинара\Code.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Код с 4-го семинара\CW FEFM.cpp">
+    <ClCompile Include="..\..\Код с 5-го семинара\Code.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

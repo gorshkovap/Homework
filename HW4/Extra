@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+#include <iomanip>
+
+int main()
+{
+	std::vector<int> vector_sort(100000);
+	std::vector<int> vector_nth(100000);
+
+	std::iota(vector_sort.begin(), vector_sort.end(), 1);
+	
+	std::iota(vector_nth.begin(), vector_nth.end(), 1);
+	
+	std::size_t c_sort = 0;
+	std::size_t c_nth = 0;
+
+	std::sort(vector_sort.begin(), vector_sort.end(), [&c_sort](auto a, auto b)
+		{
+			c_sort++;
+			return a < b;
+		});
+
+	std::nth_element(vector_nth.begin(), vector_nth.begin() + std::size(vector_nth) / 2,
+		vector_nth.end(), [&c_nth](auto a, auto b)
+		{
+			c_nth++;
+			return a < b;
+		});
+
+	std::cout  << "Count for sort: " << c_sort << ' ' << std::endl << "Count for nth: " << c_nth << std::endl;
+
+}
