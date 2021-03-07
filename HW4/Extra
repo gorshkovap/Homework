@@ -10,11 +10,9 @@ int main()
 	std::vector<int> vector_nth(100000);
 
 	std::iota(std::begin(vector_sort), std::end(vector_sort), 1);
-	std::reverse(std::begin(vector_sort), std::end(vector_sort));
-
+	
 	std::iota(vector_nth.begin(), vector_nth.end(), 1);
-	std::reverse(vector_nth.begin(), vector_nth.end());
-
+	
 	std::size_t c_sort = 0;
 	std::size_t c_nth = 0;
 
