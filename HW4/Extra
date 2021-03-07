@@ -31,7 +31,6 @@ int main()
 			return a < b;
 		});
 
-	std::cout << std::left << std::setw(17) << "Count for sort: " << c_sort << ' ' << std::endl
-		<< std::left << std::setw(17) << "Count for nth: " << c_nth << std::endl;
+	std::cout  << "Count for sort: " << c_sort << ' ' << std::endl << "Count for nth: " << c_nth << std::endl;
 
 }
