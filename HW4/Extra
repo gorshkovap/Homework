@@ -9,7 +9,7 @@ int main()
 	std::vector<int> vector_sort(100000);
 	std::vector<int> vector_nth(100000);
 
-	std::iota(std::begin(vector_sort), std::end(vector_sort), 1);
+	std::iota(vector_sort.begin(), vector_sort.end(), 1);
 	
 	std::iota(vector_nth.begin(), vector_nth.end(), 1);
 	
