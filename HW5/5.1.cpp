@@ -13,10 +13,10 @@ int main(int argc, char** argv)
 	double value_us;
 	double value_rub;
 	std::cin >> value_us;
-	std::ostringstream usout;
-	usout.imbue(std::locale("en_US.UTF-8"));
-	usout << std::showbase << std::put_money(value_us * 100, false) << std::endl;
-	std::cout << usout.str() << std::endl;
+	std::ostringstream value_usout;
+	value_usout.imbue(std::locale("en_US.UTF-8"));
+	value_usout << std::showbase << std::put_money(value_us * 100, false) << std::endl;
+	std::cout << value_usout.str() << std::endl;
 
 	value_rub = value_us * 80;
 	std::ostringstream sout;
