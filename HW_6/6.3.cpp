@@ -27,6 +27,10 @@ void view_directory(const std::filesystem::path& path)
 			auto last_change_time = std::asctime(std::localtime(&time_point));
 
 			std::cout << file_name << extension << last_change_time;
+			
+			std::string file_dir = "";
+			if (std::filesystem::exists(entry) && std::filesystem::is_directory(entry))
+				file_dir = "<DIR>";
 		}
 	}
 	else
