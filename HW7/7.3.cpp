@@ -36,10 +36,7 @@ int main(int argc, char** argv)
 
 	std::iota(v.begin(), v.end(), 0);
 
-	/*std::for_each(v.begin(), v.end(), [](auto& kal) {kal *= 2; });
-	std::cout << "privet";*/
-
-	parallel_for_each(v.begin(), v.end(), [](auto& kal) {kal *= 2; }, v.size()/std::thread::hardware_concurrency());
+	parallel_for_each(v.begin(), v.end(), [](auto& ka) {ka *= 2; }, v.size()/std::thread::hardware_concurrency());
 
 	std::cout << v[35] << std::endl;
 
