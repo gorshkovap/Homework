@@ -14,7 +14,7 @@
 class Threads_Guard
 {
 public:
-	explicit Threads_Guard(std::vector < std::thread > & threads) : m_threads(threads)
+	explicit Threads_Guard(std::vector < std::thread >& threads) : m_threads(threads)
 	{}
 
 	Threads_Guard(Threads_Guard const&) = delete;
@@ -44,7 +44,7 @@ private:
 };
 
 template < typename F, typename Distr_t>
-struct find_str
+struct Monte_Karlo
 {
 	std::size_t operator()(const std::size_t N, F predicate, Distr_t distribution)
 	{
@@ -68,7 +68,7 @@ template <typename F, typename Distr_t >
 std::size_t parallel_find_substr(const std::size_t points_num, F predicate, Distr_t distribution)
 {
 	const std::size_t hardware_threads = std::thread::hardware_concurrency();
-	const std::size_t num_threads =	(hardware_threads != 0U ? hardware_threads : 2U);
+	const std::size_t num_threads = (hardware_threads != 0U ? hardware_threads : 2U);
 	const std::size_t block_size = points_num / num_threads;
 
 	std::vector < std::future < std::size_t > > futures(num_threads - 1U);
@@ -78,13 +78,13 @@ std::size_t parallel_find_substr(const std::size_t points_num, F predicate, Dist
 
 	for (std::size_t i = 0U; i < (num_threads - 1U); ++i)
 	{
-		std::packaged_task < std::size_t(std::size_t, F, Distr_t) > task{find_str <F, Distr_t>()};
+		std::packaged_task < std::size_t(std::size_t, F, Distr_t) > task{ Monte_Karlo <F, Distr_t>() };
 
 		futures[i] = task.get_future();
 		threads[i] = std::thread(std::move(task), block_size, predicate, distribution);
 	}
 
-	std::size_t last_result = find_str < F, Distr_t >()(points_num - (num_threads - 1U) * block_size, predicate, distribution);
+	std::size_t last_result = Monte_Karlo < F, Distr_t >()(points_num - (num_threads - 1U) * block_size, predicate, distribution);
 
 	std::size_t result = 0U;
 
@@ -100,17 +100,17 @@ std::size_t parallel_find_substr(const std::size_t points_num, F predicate, Dist
 
 int main()
 {
-	const double radius = 1.0;	
+	const double radius = 1.0;
 	const std::size_t points_num = 80000U;
 
 	std::uniform_real_distribution <> urd(0.0, radius);
 
 	auto lambda = [](std::pair<double, double>& point) {return (point.first * point.first + point.second * point.second < 1.0); };
-	
+
 	{
 		Timer<std::chrono::milliseconds> sequential_time("sequential time");
 
-		auto inside = find_str <decltype(lambda), decltype(urd)>()(points_num, lambda, urd);		
+		auto inside = Monte_Karlo <decltype(lambda), decltype(urd)>()(points_num, lambda, urd);
 
 		double pi = 4.0 * radius * radius * inside / points_num;
 		std::cout << "pi = " << pi << '\n';
