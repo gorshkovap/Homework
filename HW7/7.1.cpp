@@ -44,7 +44,7 @@ private:
 };
 
 template < typename F, typename Distr_t>
-struct Monte_Karlo
+struct Monte_Carlo
 {
 	std::size_t operator()(const std::size_t N, F predicate, Distr_t distribution)
 	{
@@ -78,13 +78,13 @@ std::size_t parallel_find_substr(const std::size_t points_num, F predicate, Dist
 
 	for (std::size_t i = 0U; i < (num_threads - 1U); ++i)
 	{
-		std::packaged_task < std::size_t(std::size_t, F, Distr_t) > task{ Monte_Karlo <F, Distr_t>() };
+		std::packaged_task < std::size_t(std::size_t, F, Distr_t) > task{ Monte_Carlo <F, Distr_t>() };
 
 		futures[i] = task.get_future();
 		threads[i] = std::thread(std::move(task), block_size, predicate, distribution);
 	}
 
-	std::size_t last_result = Monte_Karlo < F, Distr_t >()(points_num - (num_threads - 1U) * block_size, predicate, distribution);
+	std::size_t last_result = Monte_Carlo < F, Distr_t >()(points_num - (num_threads - 1U) * block_size, predicate, distribution);
 
 	std::size_t result = 0U;
 
@@ -110,7 +110,7 @@ int main()
 	{
 		Timer<std::chrono::milliseconds> sequential_time("sequential time");
 
-		auto inside = Monte_Karlo <decltype(lambda), decltype(urd)>()(points_num, lambda, urd);
+		auto inside = Monte_Carlo <decltype(lambda), decltype(urd)>()(points_num, lambda, urd);
 
 		double pi = 4.0 * radius * radius * inside / points_num;
 		std::cout << "pi = " << pi << '\n';
