@@ -28,9 +28,9 @@ public:
 			pause();
 			m_stream << m_name << " counted " << std::chrono::duration_cast <std::chrono::microseconds> (m_time).count() << " microseconds\n";
 		}
-		catch (...)
+		catch (std::exception& exception)
 		{
-			// std::abort();
+			std::cerr << "Standard exception: " << exception.what() << '\n';
 		}
 	}
 
