@@ -65,7 +65,7 @@ struct Monte_Carlo
 };
 
 template <typename F, typename Distr_t >
-std::size_t parallel_find_substr(const std::size_t points_num, F predicate, Distr_t distribution)
+std::size_t Monte__Carlo(const std::size_t points_num, F predicate, Distr_t distribution)
 {
 	const std::size_t hardware_threads = std::thread::hardware_concurrency();
 	const std::size_t num_threads = (hardware_threads != 0U ? hardware_threads : 2U);
