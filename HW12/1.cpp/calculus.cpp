@@ -1,6 +1,6 @@
-#include "calculator.hpp"
+#include "calculus.hpp"
 
-void Calculator::initialize()
+void Calculus::initialize()
 {
 	m_field.resize(m_height);
 
@@ -10,7 +10,7 @@ void Calculator::initialize()
 	}
 }
 
-void Calculator::calculate(sf::Vector2f center, float width, float height)
+void Calculus::calculate(sf::Vector2f center, float width, float height)
 {
 	auto threads_number = std::thread::hardware_concurrency();// потоки
 
