@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class Calculator
+class Calculus
 {
 public:
 
@@ -15,13 +15,13 @@ public:
 
 public:
 
-    explicit Calculator(std::size_t width, std::size_t height, std::size_t max_iterations) :
+    explicit Calculus(std::size_t width, std::size_t height, std::size_t max_iterations) :
 		m_width(width), m_height(height), m_max_iterations(max_iterations)
 	{
 		initialize();
 	}
 
-	~Calculator() noexcept = default;
+	~Calculus() noexcept = default;
 
 private:
 
