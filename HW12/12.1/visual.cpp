@@ -1,4 +1,4 @@
-#include "visualizer.hpp"
+#include "visual.hpp"
 
 void Visualizer::initialize()
 {
