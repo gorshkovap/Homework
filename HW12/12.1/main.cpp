@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "visualizer.hpp"
+#include "visual.hpp"
 
 int main(int argc, char ** argv)
 {
